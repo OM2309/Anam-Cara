@@ -33,9 +33,10 @@ export default function RootLayout({
       >
         <BackgroundPattern />
         <ThemeProvider attribute="class" defaultTheme="system">
-          <Header />
-
-          {children}
+          <div className="container">
+            <Header />
+            {children}
+          </div>
         </ThemeProvider>
       </body>
     </html>

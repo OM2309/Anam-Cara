@@ -1,9 +1,11 @@
-// import { CreateRoom } from "@/components/create-room";
+import { AnimatedShinyTextButton } from "@/components/animated-shinny-button";
 
 export default function Home() {
   return (
     <>
-      <div className=" ">{/* <CreateRoom /> */}</div>
+      <div className="flex justify-center items-center flex-col">
+        <AnimatedShinyTextButton />
+      </div>
     </>
   );
 }
