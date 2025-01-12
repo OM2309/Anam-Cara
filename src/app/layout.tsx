@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 
 import { Header } from "@/components/header";
 import { BackgroundPattern } from "@/components/background-pattern";
+import QueryProvider from "./queryProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,12 +32,14 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <BackgroundPattern />
         <ThemeProvider attribute="class" defaultTheme="system">
-          <div className="container">
-            <Header />
-            {children}
-          </div>
+          <QueryProvider>
+            <BackgroundPattern />
+            <div className="container">
+              <Header />
+              {children}
+            </div>
+          </QueryProvider>
         </ThemeProvider>
       </body>
     </html>
