@@ -1,6 +1,3 @@
-"use client";
-
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -12,9 +9,16 @@ import {
 } from "@/components/ui/card";
 import Image from "next/image";
 import { Share2 } from "lucide-react";
+// import { getSpotifyPlaylistById } from "@/actions/spotifyActions";
+// import { useQuery } from "@tanstack/react-query";
 
-export default function GlassmorphismPlaylistImport() {
-  const [playlistLink, setPlaylistLink] = useState<any>();
+export function PlaylistAdd() {
+  // const { data } = useQuery({
+  //   queryKey: ["spotifyPlaylist"],
+  //   queryFn: () => getSpotifyPlaylistById("3pglrl7LFZjcm0Hfnb4FVz"),
+  // });
+
+  // console.log(data);
 
   return (
     <Card className="w-full max-w-md bg-black/30 backdrop-blur-md border-white/10 shadow-2xl rounded-xl overflow-hidden">
@@ -39,8 +43,8 @@ export default function GlassmorphismPlaylistImport() {
           <Input
             type="text"
             placeholder="https://open.spotify.com/playlist/..."
-            value={playlistLink}
-            onChange={(e) => setPlaylistLink(e.target.value)}
+            // value={playlistLink}
+            // onChange={(e) => setPlaylistLink(e.target.value)}
             className="flex-grow bg-black/20 border-white/10 text-white placeholder-gray-300 focus:ring-[#1DB954] focus:border-[#1DB954]"
           />
           <Button className="bg-[#1DB954] hover:bg-[#1ed760] text-black font-bold transition-colors duration-200">
@@ -50,7 +54,7 @@ export default function GlassmorphismPlaylistImport() {
       </CardContent>
 
       <div>
-        {playlistLink > 0 ? (
+        {2 > 5 ? (
           "Hello"
         ) : (
           <div className="flex justify-center mb-4">

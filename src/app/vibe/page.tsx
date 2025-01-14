@@ -1,4 +1,4 @@
-import PlaylistAdd from "@/components/playlist-add";
+import { PlaylistAdd } from "@/components/playlist-add";
 
 const Vibe = () => {
   return (
