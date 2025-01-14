@@ -11,6 +11,7 @@ import {
   CardContent,
 } from "@/components/ui/card";
 import Image from "next/image";
+import { Share2 } from "lucide-react";
 
 export default function GlassmorphismPlaylistImport() {
   const [playlistLink, setPlaylistLink] = useState<any>();
@@ -61,6 +62,12 @@ export default function GlassmorphismPlaylistImport() {
             />
           </div>
         )}
+      </div>
+      <div className="flex justify-end p-4">
+        <Button className="bg-[#1DB954] hover:bg-[#1ed760] text-black font-bold transition-colors duration-200">
+          Invite Friends
+          <Share2 />
+        </Button>
       </div>
     </Card>
   );
