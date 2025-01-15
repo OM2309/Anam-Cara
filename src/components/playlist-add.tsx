@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -9,16 +10,16 @@ import {
 } from "@/components/ui/card";
 import Image from "next/image";
 import { Share2 } from "lucide-react";
-// import { getSpotifyPlaylistById } from "@/actions/spotifyActions";
-// import { useQuery } from "@tanstack/react-query";
+import { getSpotifyPlaylistById } from "@/actions/spotifyActions";
+import { useQuery } from "@tanstack/react-query";
 
 export function PlaylistAdd() {
-  // const { data } = useQuery({
-  //   queryKey: ["spotifyPlaylist"],
-  //   queryFn: () => getSpotifyPlaylistById("3pglrl7LFZjcm0Hfnb4FVz"),
-  // });
+  const { data } = useQuery({
+    queryKey: ["spotifyPlaylist"],
+    queryFn: () => getSpotifyPlaylistById("3pglrl7LFZjcm0Hfnb4FVz"),
+  });
 
-  // console.log(data);
+  console.log(data);
 
   return (
     <Card className="w-full max-w-md bg-black/30 backdrop-blur-md border-white/10 shadow-2xl rounded-xl overflow-hidden">
