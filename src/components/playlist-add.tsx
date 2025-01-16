@@ -19,7 +19,7 @@ export function PlaylistAdd() {
     queryFn: () => getSpotifyPlaylistById("3pglrl7LFZjcm0Hfnb4FVz"),
   });
 
-  console.log(data);
+  console.log({ data: data?.tracks.items });
 
   return (
     <Card className="w-full max-w-md bg-black/30 backdrop-blur-md border-white/10 shadow-2xl rounded-xl overflow-hidden">
@@ -55,8 +55,8 @@ export function PlaylistAdd() {
       </CardContent>
 
       <div>
-        {2 > 5 ? (
-          "Hello"
+        {data?.tracks?.items?.length > 0 ? (
+          <>Hello</>
         ) : (
           <div className="flex justify-center mb-4">
             <Image
@@ -68,6 +68,7 @@ export function PlaylistAdd() {
           </div>
         )}
       </div>
+
       <div className="flex justify-end p-4">
         <Button className="bg-[#1DB954] hover:bg-[#1ed760] text-black font-bold transition-colors duration-200">
           Invite Friends
