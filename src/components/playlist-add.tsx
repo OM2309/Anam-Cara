@@ -19,7 +19,10 @@ export function PlaylistAdd() {
     queryFn: () => getSpotifyPlaylistById("3pglrl7LFZjcm0Hfnb4FVz"),
   });
 
-  console.log({ data: data?.tracks.items });
+  const handlePlayTrack = (track: any) => {
+    // Replace the below with your playback logic
+    console.log("Playing track:", track.name);
+  };
 
   return (
     <Card className="w-full max-w-md bg-black/30 backdrop-blur-md border-white/10 shadow-2xl rounded-xl overflow-hidden">
@@ -56,7 +59,34 @@ export function PlaylistAdd() {
 
       <div>
         {data?.tracks?.items?.length > 0 ? (
-          <>Hello</>
+          <div>
+            {data.tracks.items.map((item, index: number) => (
+              <div
+                key={index}
+                className="track-item px-4 flex items-center space-x-4 mb-4"
+                onClick={() => handlePlayTrack(item.track)}
+              >
+                <Image
+                  src={
+                    item.track.album.images[0]?.url ||
+                    "/images/default-image.jpg"
+                  }
+                  alt={`Album art for ${item.track.name}`}
+                  width={50}
+                  height={50}
+                  className="rounded-lg cursor-pointer "
+                />
+                <div className="flex-col">
+                  <h3 className="text-md font-normal">{item.track.name}</h3>
+                  <p className="text-xs text-[#D0BCFF]">
+                    {item.track.artists
+                      .map((artist: any) => artist.name)
+                      .join(", ")}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
         ) : (
           <div className="flex justify-center mb-4">
             <Image
