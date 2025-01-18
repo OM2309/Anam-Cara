@@ -16,7 +16,7 @@ import { useQuery } from "@tanstack/react-query";
 export function PlaylistAdd() {
   const { data } = useQuery({
     queryKey: ["spotifyPlaylist"],
-    queryFn: () => getSpotifyPlaylistById("3pglrl7LFZjcm0Hfnb4FVz"),
+    queryFn: () => getSpotifyPlaylistById("7b2z6wcfGmxkgGuGO6Jamx"),
   });
 
   const handlePlayTrack = (track: any) => {
@@ -47,8 +47,6 @@ export function PlaylistAdd() {
           <Input
             type="text"
             placeholder="https://open.spotify.com/playlist/..."
-            // value={playlistLink}
-            // onChange={(e) => setPlaylistLink(e.target.value)}
             className="flex-grow bg-black/20 border-white/10 text-white placeholder-gray-300 focus:ring-[#1DB954] focus:border-[#1DB954]"
           />
           <Button className="bg-[#1DB954] hover:bg-[#1ed760] text-black font-bold transition-colors duration-200">
