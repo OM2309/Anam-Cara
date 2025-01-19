@@ -1,14 +1,14 @@
-import Footer from "@/components/footer";
 import { PlaylistAdd } from "@/components/playlist-add";
-
+import SpotifyIframe from "@/components/spotifyIframe";
 const Vibe = () => {
   return (
-    <div className="">
-      <div className="flex justify-end">
+    <div className="flex justify-between">
+      <div className="">
+        <SpotifyIframe />
+      </div>
+      <div className="">
         <PlaylistAdd />
       </div>
-
-      <Footer />
     </div>
   );
 };

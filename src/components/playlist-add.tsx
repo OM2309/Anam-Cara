@@ -1,6 +1,8 @@
 "use client";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { useQuery } from "@tanstack/react-query";
+import { getSpotifyPlaylistById } from "@/actions/spotifyActions";
 import {
   Card,
   CardHeader,
@@ -8,20 +10,45 @@ import {
   CardDescription,
   CardContent,
 } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import { Share2 } from "lucide-react";
-import { getSpotifyPlaylistById } from "@/actions/spotifyActions";
-import { useQuery } from "@tanstack/react-query";
+import useStore from "@/store/playTrack";
 
 export function PlaylistAdd() {
+  const [playlistId, setPlaylistId] = useState<string | null>(null);
+
+  // Get Zustand store actions and state
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<{ playlistUrl: string }>();
   const { data } = useQuery({
-    queryKey: ["spotifyPlaylist"],
-    queryFn: () => getSpotifyPlaylistById("7b2z6wcfGmxkgGuGO6Jamx"),
+    queryKey: ["spotifyPlaylist", playlistId],
+    queryFn: () => playlistId && getSpotifyPlaylistById(playlistId),
+    enabled: !!playlistId,
   });
 
-  const handlePlayTrack = (track: any) => {
-    // Replace the below with your playback logic
-    console.log("Playing track:", track.name);
+  // Zustand actions
+  const { setSelectedTrackId, selectedTrackId } = useStore();
+
+  const onSubmit = (values: { playlistUrl: string }) => {
+    const match = values.playlistUrl.match(/playlist\/([a-zA-Z0-9]+)/);
+    if (match) {
+      setPlaylistId(match[1]);
+    } else {
+      console.error("Invalid Spotify URL");
+    }
+  };
+
+  const handlePlayTrack = (track) => {
+    if (selectedTrackId === track.id) {
+      playTrack(track.id);
+    } else {
+      setSelectedTrackId(track.id);
+    }
   };
 
   return (
@@ -42,26 +69,43 @@ export function PlaylistAdd() {
           Paste your Spotify playlist link to import songs
         </CardDescription>
       </CardHeader>
+
       <CardContent className="space-y-4">
-        <div className="flex flex-col sm:flex-row gap-2">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="flex flex-col sm:flex-row gap-2"
+        >
           <Input
             type="text"
             placeholder="https://open.spotify.com/playlist/..."
             className="flex-grow bg-black/20 border-white/10 text-white placeholder-gray-300 focus:ring-[#1DB954] focus:border-[#1DB954]"
+            {...register("playlistUrl", {
+              required: "Please enter a Spotify playlist URL",
+              validate: (value) =>
+                /https:\/\/open\.spotify\.com\/playlist\/([a-zA-Z0-9]+)(\?.*)?$/.test(
+                  value
+                ) || "Invalid Spotify playlist URL",
+            })}
           />
-          <Button className="bg-[#1DB954] hover:bg-[#1ed760] text-black font-bold transition-colors duration-200">
+          <Button
+            type="submit"
+            className="bg-[#1DB954] hover:bg-[#1ed760] text-black font-bold transition-colors duration-200"
+          >
             Import
           </Button>
-        </div>
+        </form>
+        {errors.playlistUrl && (
+          <p className="text-red-500 text-sm">{errors.playlistUrl.message}</p>
+        )}
       </CardContent>
 
-      <div>
+      <div className="max-h-[400px] overflow-y-auto">
         {data?.tracks?.items?.length > 0 ? (
           <div>
             {data.tracks.items.map((item, index: number) => (
               <div
                 key={index}
-                className="track-item px-4 flex items-center space-x-4 mb-4"
+                className="track-item px-4 flex items-center space-x-4 mb-4 cursor-pointer"
                 onClick={() => handlePlayTrack(item.track)}
               >
                 <Image
@@ -72,10 +116,12 @@ export function PlaylistAdd() {
                   alt={`Album art for ${item.track.name}`}
                   width={50}
                   height={50}
-                  className="rounded-lg cursor-pointer "
+                  className="rounded-lg"
                 />
                 <div className="flex-col">
-                  <h3 className="text-md font-normal">{item.track.name}</h3>
+                  <h3 className="text-md font-normal text-white">
+                    {item.track.name}
+                  </h3>
                   <p className="text-xs text-[#D0BCFF]">
                     {item.track.artists
                       .map((artist: any) => artist.name)
@@ -100,7 +146,7 @@ export function PlaylistAdd() {
       <div className="flex justify-end p-4">
         <Button className="bg-[#1DB954] hover:bg-[#1ed760] text-black font-bold transition-colors duration-200">
           Invite Friends
-          <Share2 />
+          <Share2 className="ml-2" />
         </Button>
       </div>
     </Card>
