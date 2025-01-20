@@ -6,6 +6,9 @@ const Vibe = () => {
       <div className="">
         <SpotifyIframe />
       </div>
+     
+      
+      
       <div className="">
         <PlaylistAdd />
       </div>
