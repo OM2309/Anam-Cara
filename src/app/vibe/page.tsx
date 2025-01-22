@@ -7,9 +7,7 @@ const Vibe = () => {
         <SpotifyIframe />
       </div>
      
-      
-      
-      <div className="">
+          <div className="">
         <PlaylistAdd />
       </div>
     </div>
